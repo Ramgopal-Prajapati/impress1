@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>🌹 Betuu · Tu maan ja ❤️</title>
+    <!-- Font Awesome 6 (free) for cute icons, fallback emojis -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #ffdde1 0%, #f9c9d1 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .main-wrapper {
+            max-width: 1300px;
+            width: 100%;
+            background: rgba(255, 248, 250, 0.75);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 56px 56px 48px 48px;
+            box-shadow: 0 25px 40px -15px rgba(201, 76, 118, 0.3);
+            padding: 30px 25px;
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            transition: all 0.3s ease;
+        }
+
+        /* QUESTION & BUTTON SECTION */
+        #question-container {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 28px;
+            transition: opacity 0.5s;
+        }
+
+        .main-question {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: #9f2b4e;
+            text-shadow: 4px 4px 0 #ffe0e5, 0 2px 15px #ffb6c1;
+            letter-spacing: 2px;
+            word-break: break-word;
+        }
+        .main-question span {
+            background: #ffa5b9;
+            padding: 5px 18px;
+            border-radius: 60px;
+            color: white;
+            font-size: 2.2rem;
+            display: inline-block;
+            margin-top: 8px;
+            box-shadow: 0 10px 0 #76253a;
+        }
+
+        .buttons-area {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 35px;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .yes-btn {
+            background: #ff4d6d;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            padding: 18px 50px;
+            border-radius: 60px;
+            box-shadow: 0 15px 0 #a12b41, 0 10px 30px #ff8c9c;
+            letter-spacing: 4px;
+            transition: 0.08s linear;
+            cursor: pointer;
+            border: 3px solid #fff3e6;
+        }
+        .yes-btn:active {
+            transform: translateY(12px);
+            box-shadow: 0 5px 0 #a12b41, 0 10px 30px #ff8c9c;
+        }
+
+        /* moving no button wrapper */
+        .no-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 130px;
+            height: 78px;
+            background: transparent;
+        }
+
+        #noBtn {
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #4a4e69;
+            color: white;
+            font-size: 1.9rem;
+            font-weight: bold;
+            padding: 14px 30px;
+            border: none;
+            border-radius: 60px;
+            box-shadow: 0 15px 0 #22223b, 0 8px 20px #4a4e69;
+            letter-spacing: 4px;
+            cursor: pointer;
+            transition: left 0.15s ease, top 0.15s ease, box-shadow 0.1s;
+            border: 2px solid #c9c9c9;
+            width: auto;
+            white-space: nowrap;
+        }
+        #noBtn:active {
+            box-shadow: 0 5px 0 #22223b;
+            transform: translateY(6px);
+        }
+
+        /* GIFTS SECTION (initially hidden) */
+        #gifts-section {
+            display: none;
+            opacity: 0;
+            animation: fadeSweet 1.2s forwards;
+        }
+
+        @keyframes fadeSweet {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .gifts-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+        .gifts-header h2 {
+            font-size: 2.4rem;
+            color: #af3c5a;
+            font-weight: 700;
+            text-shadow: 2px 2px 0 #ffe3e7;
+        }
+        .gifts-header p {
+            font-size: 1.7rem;
+            color: #772e47;
+            background: #ffdce5;
+            display: inline-block;
+            padding: 10px 28px;
+            border-radius: 50px;
+            margin-top: 12px;
+            border: 3px dashed #ff9eb5;
+        }
+
+        .gifts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .gift-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: 3px solid #ffe7ed;
+            border-radius: 36px;
+            padding: 22px 16px;
+            box-shadow: 0 15px 25px #d69dab4d;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: all 0.2s;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s cubic-bezier(0.23, 1, 0.32, 1), transform 0.6s ease;
+        }
+        .gift-card.reveal {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+        .gift-card:hover {
+            transform: scale(1.02);
+            border-color: #ff95ad;
+            background: white;
+        }
+
+        .gift-title {
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: #b3415e;
+            margin-bottom: 15px;
+            background: #ffeee1;
+            width: 100%;
+            padding: 8px 0;
+            border-radius: 50px;
+            border: 2px solid #ffc2c9;
+        }
+
+        .gift-content {
+            font-size: 1.25rem;
+            color: #2b2b2b;
+            width: 100%;
+            line-height: 1.5;
+        }
+
+        /* emoji & heart animation */
+        .floating-hearts {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            font-size: 2.8rem;
+            animation: float 2.2s infinite alternate;
+        }
+        .heart-blast {
+            animation: pop 0.9s infinite;
+            display: inline-block;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-15px); }
+        }
+        @keyframes pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); color: #ff0a4f; }
+            100% { transform: scale(1); }
+        }
+
+        /* images gallery in gift 3 */
+        .memory-images {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 10px;
+        }
+        .memory-images img {
+            width: 90px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 25px;
+            border: 4px solid white;
+            box-shadow: 0 8px 12px #c46e7e70;
+            transition: 0.2s;
+        }
+        .memory-images img:hover {
+            transform: scale(1.1);
+            border-color: #ffa5b9;
+        }
+
+        .heartbeat {
+            animation: heartbeat 1.3s infinite;
+        }
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.2); }
+            35% { transform: scale(1.1); }
+            45% { transform: scale(1.25); }
+            55% { transform: scale(1); }
+        }
+
+        /* Responsive */
+        @media (max-width: 700px) {
+            .main-question { font-size: 2.2rem; }
+            .main-question span { font-size: 1.8rem; }
+            .yes-btn { font-size: 1.7rem; padding: 14px 35px; }
+            #noBtn { font-size: 1.6rem; padding: 12px 25px; }
+            .no-wrapper { width: 110px; height: 68px; }
+            .gifts-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 450px) {
+            .main-wrapper { padding: 20px 12px; }
+            .buttons-area { gap: 20px; }
+            .gift-title { font-size: 1.5rem; }
+        }
+
+        .fa-heart, .fa-heart-circle {
+            color: #ff4d6d;
+        }
+        .small-credit {
+            margin-top: 40px;
+            color: #996277;
+            font-size: 0.8rem;
+            text-align: center;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-wrapper" id="mainWrapper">
+        <!-- ---------- MAIN QUESTION ---------- -->
+        <div id="question-container">
+            <h1 class="main-question">
+                💘 Do you love me, <span>betuu</span>? 💘
+            </h1>
+            <div class="buttons-area">
+                <button class="yes-btn" id="yesBtn">YES ❤️</button>
+                <!-- Wrapper for moving No button -->
+                <div class="no-wrapper" id="noWrapper">
+                    <button id="noBtn">NO 😈</button>
+                </div>
+            </div>
+            <div style="margin-top: 25px; font-size: 1.6rem; color: #b35463;">
+                <i class="fas fa-heart heartbeat"></i>  betuu  <i class="fas fa-heart heartbeat"></i>
+            </div>
+        </div>
+
+        <!-- ---------- ALL GIFTS / SURPRISES (hidden until yes) ---------- -->
+        <div id="gifts-section">
+            <div class="gifts-header">
+                <h2>✨ YAY! You chose YES, betuu! ✨</h2>
+                <p>🎁 Here are 15 surprises just for you 💝</p>
+            </div>
+            <!-- dynamic gifts grid will be injected here -->
+            <div class="gifts-grid" id="giftsGrid"></div>
+            <div class="small-credit">
+                🌸 made with 100% love for betuu 🌸
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            "use strict";
+
+            // ----------  BETUU'S CUSTOM GIFTS  ----------
+            const betuuName = "betuu";  // using everywhere
+
+            // ----------  GIFT DATA (15 items, first three special) ----------
+            const giftsData = [
+                // 1 — Emojis, hearts, animation (special)
+                {
+                    title: "💞 Emoji Heart Blast 💞",
+                    contentFn: () => {
+                        const div = document.createElement('div');
+                        div.className = 'floating-hearts';
+                        div.innerHTML = `
+                            <span class="heartbeat">❤️</span> <span>🧡</span> <span class="heartbeat">💛</span> <span>💚</span> 
+                            <span>💙</span> <span class="heartbeat">💜</span> <span>🩷</span> <span>❤️‍🔥</span> 
+                            <span>💖</span> <span>💗</span> <span>💓</span> <span>💕</span> <span>💘</span>
+                            <div style="width:100%; margin-top:8px; font-size:2.2rem;">
+                                <i class="fas fa-heart" style="color:#ff3366;"></i>
+                                <i class="fas fa-heart" style="color:#ff6b8b;"></i>
+                                <i class="fas fa-heart" style="color:#ffb3c6;"></i>
+                                😘🥰😍❤️
+                            </div>
+                        `;
+                        return div;
+                    }
+                },
+                // 2 — Memories: "sath me ache rehete, piyar" (special)
+                {
+                    title: "📖 Our sweet memories",
+                    contentFn: () => {
+                        const p = document.createElement('p');
+                        p.style.fontSize = '1.3rem';
+                        p.style.fontWeight = '500';
+                        p.style.padding = '10px';
+                        p.innerHTML = `✨ <strong>betuu</strong>, hum sath me bahot ache rehte hain! ✨<br>
+                        😍 Teri hansi, teri batein — sab kuch pyaara hai.<br>
+                        💑 Har pal tujhse juda rehna mushkil.<br>
+                        🌸 Tu meri life ki best memory hai. <br>
+                        💞 I love you more than chai ☕ loves biscuit! 🍪<br>
+                        🥺 Remember our late night calls? 🤙🏻❤️`;
+                        return p;
+                    }
+                },
+                // 3 — Real images (best moments) (special)
+                {
+                    title: "📸  Best moments together",
+                    contentFn: () => {
+                        const div = document.createElement('div');
+                        div.className = 'memory-images';
+                        // Using free, romantic Unsplash images (public use, attribution optional)
+                        div.innerHTML = `
+                            <img src="https://images.unsplash.com/photo-1529333320936-e2193f4e3b32?w=200&h=200&fit=crop&auto=format" alt="couple hug" loading="lazy">
+                            <img src="https://images.unsplash.com/photo-1529634597503-139d3726fed5?w=200&h=200&fit=crop&auto=format" alt="romantic kiss" loading="lazy">
+                            <img src="https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?w=200&h=200&fit=crop&auto=format" alt="heart shape" loading="lazy">
+                            <img src="https://images.unsplash.com/photo-1534536287275-ffe89bb9b4e0?w=200&h=200&fit=crop&auto=format" alt="couple walking" loading="lazy">
+                            <p style="width:100%; margin-top:10px; font-size:1.2rem; background:#ffe6ec; padding:8px; border-radius:30px;">
+                            ⚡ betuu, these are just placeholders for now — but our own pics are 1000x cuter! 📸💕
+                            </p>
+                        `;
+                        return div;
+                    }
+                },
+                // 4 — Love letter
+                {
+                    title: "💌  handwritten letter",
+                    contentFn: () => {
+                        const p = document.createElement('p');
+                        p.style.fontStyle = 'italic';
+                        p.style.fontSize = '1.2rem';
+                        p.innerHTML = `"My sweet betuu, from the day I met you, my world turned pink 🌸. 
+                        You're my favorite hello and hardest goodbye. I love you to the moon and back — infinity times. 💫"`;
+                        return p;
+                    }
+                },
+                // 5 — Cuteness overload
+                {
+                    title: "🐣  Cuteness alert!",
+                    contentFn: () => {
+                        const p = document.createElement('p');
+                        p.style.fontSize = '1.7rem';
+                        p.innerHTML = `🐶🐱🐼🐨🐸🦊🐥<br> <span style="font-size:1.2rem;">you're cuter than all of them, betuu! 🥺👉👈</span>`;
+                        return p;
+                    }
+                },
+                // 6 — Promise
+                {
+                    title: "🤞  My Promise",
+                    contentFn: () => {
+                        const p = document.createElement('p');
+                        p.innerHTML = `<i class="fas fa-hand-holding-heart" style="font-size:2.5rem; color:#c4455e;"></i><br>
+                        <strong>I promise, betuu:</strong> Always be your peace, your laughter, and your umbrella in rain ☔. No matter what! 💪❤️`;
+                        return p;
+                    }
+                },
+                // 7 — Song
+                {
+                    title: "🎶  Our vibe",
+                    contentFn: () => {
+                        const p = document.createElement('p');
+                        p.innerHTML = `🎵 "<em>Perfect</em>" — Ed Sheeran 🎵<br>
+                        🎧 "Tu hi hai aashiqui" — ♪<br>
+                        Betuu, har gaana tere baare me lagta hai 😭🎼`;
+                        return p;
+                    }
+                },
+                // 8 — Virtual rose
+                {
+                    title: "🌹  Eternal rose",
+                    contentFn: () => {
+                        const div = document.createElement('div');
+                        div.style.fontSize = '3.5rem';
+                        div.innerHTML = `🌹🌹🌹<br><span style="font-size:1.2rem;">for you, my love — smell it? 😉💋</span>`;
+                        return div;
+                    }
+                },
+                // 9 — Fun fact / quiz
+                {
+                    title: "🤔  Betuu quiz",
+                    contentFn: () => {
+                        const p = document.createElement('p');
+                        p.innerHTML = `🧐 <strong>Q: What is my favourite thing about you?</strong><br>
+                        ✅ A: literally everything. but specially your smile, your annoying taunts, and how you say "haan ji". 😍😘`;
+                        return p;
+                    }
+                },
+                // 10 — heart animation gif-like
+                {
+                    title: "💓  Beating heart",
+                    contentFn: () => {
+                        const div = document.createElement('div');
+                        div.className = 'heartbeat';
+                        div.style.fontSize = '3.8rem';
+                        div.innerHTML = `❤️❤️‍🔥❤️`;
+                        return div;
+                    }
+                },
+                // 11 — Personalized
+                {
+                    title: "🎀  just for betuu",
+                    contentFn: () => {
+                        const p = document.createElement('p');
+                        p.style.background = '#ffe0e7';
+                        p.style.borderRadius = '30px';
+                        p.style.padding = '12px';
+                        p.innerHTML = `💘 betuu, you are the piece of my heart I never knew was missing. 💘 <br>My life changed for good since you. 🥹🤍`;
+                        return p;
+                    }
+                },
+                // 12 — 5 reasons
+                {
+                    title: "✨  5 reasons I love u",
+                    contentFn: () => {
+                        const ul = document.createElement('ul');
+                        ul.style.textAlign = 'left';
+                        ul.style.listStyle = 'none';
+                        ul.style.padding = '5px';
+                        ul.innerHTML = `
+                            <li>🥇 1. Teri woh shaitaani smile 😼</li>
+                            <li>🥈 2. Tu meri baat dhyaan se sunta hai 👂</li>
+                            <li>🥉 3. Tera pyaar bhara gussa 🥺💢</li>
+                            <li>🏅 4. Tu mera safe space hai 🛡️</li>
+                            <li>🎖️ 5. Tu hi tu hai — one and only betuu 🌟</li>
+                        `;
+                        return ul;
+                    }
+                },
+                // 13 — Future plans
+                {
+                    title: "🔮  Our future",
+                    contentFn: () => {
+                        const p = document.createElement('p');
+                        p.innerHTML = `✈️ We'll travel to mountains & beaches 🏝️<br>
+                        🏡 Build a cozy home with 3 cats 🐈🐈🐈<br>
+                        👵🏻👴🏻 grow old together, still flirting. 😘<br>
+                        <i>bas tera saath chahiye, betuu</i> 🤍`;
+                        return p;
+                    }
+                },
+                // 14 — Valentine final
+                {
+                    title: "💝  Valentine surprise",
+                    contentFn: () => {
+                        const div = document.createElement('div');
+                        div.style.fontSize = '2rem';
+                        div.innerHTML = `🍫💐 Will you be my Valentine forever?<br> 
+                        <span style="font-size:2.5rem;">✅✅ YES! (you already said yes, but still😉)</span>`;
+                        return div;
+                    }
+                },
+                // 15 — Massive hearts (grande finale)
+                {
+                    title: "❤️‍🔥❤️‍🔥❤️‍🔥",
+                    contentFn: () => {
+                        const div = document.createElement('div');
+                        div.style.fontSize = '3.2rem';
+                        div.style.lineHeight = '1.3';
+                        div.innerHTML = `❤️🧡💛💚💙💜🩷🤍🖤❤️‍🔥<br>💞💕💓💗💖💘💝💘💖💗💓`;
+                        return div;
+                    }
+                }
+            ];
+
+            // ----------  DOM elements  ----------
+            const questionContainer = document.getElementById('question-container');
+            const giftsSection = document.getElementById('gifts-section');
+            const giftsGrid = document.getElementById('giftsGrid');
+            const yesBtn = document.getElementById('yesBtn');
+            const noBtn = document.getElementById('noBtn');
+            const noWrapper = document.getElementById('noWrapper');
+
+            // ----------  FLEEING NO BUTTON  ----------
+            function moveNoButton() {
+                if (!noWrapper || !noBtn) return;
+                
+                const wrapperRect = noWrapper.getBoundingClientRect();
+                const btnRect = noBtn.getBoundingClientRect();
+                
+                // button width/height with current inline dimensions
+                const btnWidth = btnRect.width;
+                const btnHeight = btnRect.height;
+                const wrapperWidth = wrapperRect.width;
+                const wrapperHeight = wrapperRect.height;
+
+                // ensure we don't go out of wrapper boundaries
+                let maxLeft = Math.max(0, wrapperWidth - btnWidth);
+                let maxTop = Math.max(0, wrapperHeight - btnHeight);
+                
+                const randomLeft = Math.floor(Math.random() * maxLeft);
+                const randomTop = Math.floor(Math.random() * maxTop);
+                
+                noBtn.style.left = randomLeft + 'px';
+                noBtn.style.top = randomTop + 'px';
+            }
+
+            // attach event listeners: move on hover/touch start and prevent click
+            if (noBtn) {
+                // mouseenter for desktop
+                noBtn.addEventListener('mouseenter', moveNoButton);
+                // touch start for mobile (move before tap)
+                noBtn.addEventListener('touchstart', function(e) {
+                    e.preventDefault();  // prevent virtual keyboard or accidental tap
+                    moveNoButton();
+                });
+                // also move on click attempt, but don't let click do anything
+                noBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    moveNoButton();
+                    return false;
+                });
+            }
+
+            // ----------  YES BUTTON : hide question, show gifts & render all  ----------
+            yesBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // hide question block with smooth fade out (optional)
+                questionContainer.style.opacity = '0';
+                setTimeout(() => {
+                    questionContainer.style.display = 'none';
+                }, 280);
+                
+                // show gifts section
+                giftsSection.style.display = 'block';
+                
+                // render all gifts inside grid
+                renderGifts();
+
+                // scroll a little bit to gifts (smooth)
+                setTimeout(() => {
+                    giftsSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 350);
+            });
+
+            // ----------  RENDER ALL 15 GIFTS, then reveal one by one  ----------
+            function renderGifts() {
+                giftsGrid.innerHTML = ''; // clear if re-render (won't happen but safe)
+                
+                // create card for each gift
+                giftsData.forEach((gift, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'gift-card';
+                    card.dataset.index = index;
+                    
+                    // title 
+                    const titleDiv = document.createElement('div');
+                    titleDiv.className = 'gift-title';
+                    titleDiv.innerText = gift.title;
+                    
+                    // content area
+                    const contentDiv = document.createElement('div');
+                    contentDiv.className = 'gift-content';
+                    
+                    // content could be DOM element or text; call function
+                    try {
+                        const contentElement = gift.contentFn();
+                        if (contentElement instanceof Node) {
+                            contentDiv.appendChild(contentElement);
+                        } else {
+                            contentDiv.innerHTML = contentElement; // fallback
+                        }
+                    } catch (e) {
+                        contentDiv.innerText = '💖 betuu, you are loved! 💖';
+                    }
+                    
+                    card.appendChild(titleDiv);
+                    card.appendChild(contentDiv);
+                    giftsGrid.appendChild(card);
+                });
+
+                // ----------  SEQUENTIAL REVEAL (ik ke baad ik)  ----------
+                const cards = document.querySelectorAll('.gift-card');
+                cards.forEach((card, idx) => {
+                    // initial hidden state via CSS .gift-card (opacity 0, transform)
+                    // reveal one by one with delay
+                    setTimeout(() => {
+                        card.classList.add('reveal');
+                    }, idx * 130);  // 130ms gap – smooth ik ke baad ik
+                });
+            }
+
+            // ----------  extra : for small screen safety  ----------
+            window.addEventListener('resize', function() {
+                // if no button is outside wrapper, reset position to 0,0 (avoids dead zone)
+                if (noBtn && noWrapper) {
+                    const wrapperRect = noWrapper.getBoundingClientRect();
+                    const btnRect = noBtn.getBoundingClientRect();
+                    if (btnRect.left < wrapperRect.left || btnRect.right > wrapperRect.right || 
+                        btnRect.top < wrapperRect.top || btnRect.bottom > wrapperRect.bottom) {
+                        noBtn.style.left = '0px';
+                        noBtn.style.top = '0px';
+                    }
+                }
+            });
+
+            // tiny: set initial position of noBtn (0,0) already in css left:0 top:0
+            // also ensure no button is click-frustrated 
+        })();
+    </script>
+
+    <!-- extra little spark: if someone clicks no million times, still yes is waiting :) -->
+    <noscript>Sorry betuu, but you need JavaScript for this magic! ❤️</noscript>
+</body>
+</html>
